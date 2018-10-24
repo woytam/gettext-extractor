@@ -14,13 +14,18 @@
  * @package Nette Extras
  */
 
+namespace Webwings\Gettext\Extractor;
+
+use Webwings\Gettext\Extractor\Filters\IFilter;
+use Webwings\Gettext\Extractor\Filters\PHPFilter;
+
 /**
  * GettextExtractor tool
  *
  * @author Karel Klima
  * @author Ondřej Vodáček
  */
-class GettextExtractor_Extractor {
+class Extractor {
 
 	const LOG_FILE = 'extractor.log';
 	const ESCAPE_CHARS = '"';
@@ -83,7 +88,7 @@ class GettextExtractor_Extractor {
 		}
 		$this->logHandler = fopen($logToFile, "w");
 		$this->setOutputMode(self::OUTPUT_POT);
-		$this->addFilter('PHP', new GettextExtractor_Filters_PHPFilter());
+		$this->addFilter('PHP', new PHPFilter());
 		$this->setMeta('POT-Creation-Date', date('c'));
 	}
 
@@ -109,16 +114,16 @@ class GettextExtractor_Extractor {
 		}
 	}
 
-	/**
-	 * Exception factory
-	 *
-	 * @param string $message
-	 * @throws Exception
-	 */
+    /**
+     * Exception factory
+     *
+     * @param string $message
+     * @throws \Exception
+     */
 	protected function throwException($message) {
 		$message = $message ? $message : 'Something unexpected occured. See GettextExtractor log for details';
 		$this->log($message);
-		throw new Exception($message);
+		throw new \Exception($message);
 	}
 
 	/**
@@ -149,8 +154,8 @@ class GettextExtractor_Extractor {
 		if (is_file($resource)) {
 			$this->inputFiles[] = $resource;
 		} elseif (is_dir($resource)) {
-			$iterator = new RecursiveIteratorIterator(
-					new RecursiveDirectoryIterator($resource, RecursiveDirectoryIterator::SKIP_DOTS)
+			$iterator = new \RecursiveIteratorIterator(
+					new \RecursiveDirectoryIterator($resource, \RecursiveDirectoryIterator::SKIP_DOTS)
 			);
 			foreach ($iterator as $file) {
 				$this->inputFiles[] = $file->getPathName();
@@ -199,12 +204,13 @@ class GettextExtractor_Extractor {
 		return $this->data;
 	}
 
-	/**
-	 * Gets an instance of a GettextExtractor filter
-	 *
-	 * @param string $filterName
-	 * @return GettextExtractor_Filters_IFilter
-	 */
+    /**
+     * Gets an instance of a GettextExtractor filter
+     *
+     * @param string $filterName
+     * @return IFilter
+     * @throws \Exception
+     */
 	public function getFilter($filterName) {
 		if (isset($this->filterStore[$filterName])) {
 			return $this->filterStore[$filterName];
@@ -231,9 +237,9 @@ class GettextExtractor_Extractor {
 	 * Add a filter object
 	 *
 	 * @param type $filterName
-	 * @param GettextExtractor_Filters_IFilter $filter
+	 * @param IFilter $filter
 	 */
-	public function addFilter($filterName, GettextExtractor_Filters_IFilter $filter) {
+	public function addFilter($filterName, IFilter $filter) {
 		$this->filterStore[$filterName] = $filter;
 	}
 
@@ -279,14 +285,15 @@ class GettextExtractor_Extractor {
 		return $this;
 	}
 
-	/**
-	 * Saves extracted data into gettext file
-	 *
-	 * @param string $outputFile
-	 * @param array $data
-	 * @return self
-	 */
-	public function save($outputFile, $data = null) {
+    /**
+     * Saves extracted data into gettext file
+     *
+     * @param string $outputFile
+     * @param array $data
+     * @return self
+     * @throws \Exception
+     */
+	public function save(string $outputFile, array $data = null) : self {
 		$data = $data ? $data : $this->data;
 
 		// Output file permission check

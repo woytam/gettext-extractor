@@ -1,9 +1,15 @@
 <?php
 
+namespace Webwings\Gettext\Extractor\Filters;
+
+use Tester\TestCase;
+
+require_once ('./../../vendor/autoload.php');
+
 /**
  * @author Ondřej Vodáček
  */
-class NetteFormsTest extends PHPUnit_Framework_TestCase {
+class NetteFormsTest extends TestCase {
 
 	/** @var GettextExtractor_NetteExtractor */
 	protected $object;

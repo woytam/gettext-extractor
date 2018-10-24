@@ -1,20 +1,27 @@
 {
-	"name": "voda/gettext-extractor",
+	"name": "webwings/gettext/extractor",
 	"description": "tool for extracting gettext messages",
 	"authors": [
 		{"name": "Ondřej Vodáček", "email": "ondrej.vodacek@gmail.com"},
-		{"name": "Karel Klima"}
+		{"name": "Karel Klima"},
+		{"name": "Jiří Dorazil", "email": "juradee@gmail.com"}
 	],
 	"keywords":["gettext", "l10n"],
 	"license": "BSD-3-Clause",
 	"require": {
-		"php": ">=5.2.2",
-		"nikic/php-parser": "~0.9.2"
+		"php": ">=7.1.0",
+        "nikic/php-parser": "^4.0.2",
+        "contributte/console": "0.4.*",
+		"latte/latte": "^2.4"
+	},
+	"require-dev": {
+		"tracy/tracy": "^2.5",
+		"nette/tester": "^2.1"
 	},
 	"autoload": {
-		"psr-0": {"GettextExtractor" : ""}
+        "classmap": ["src/"]
 	},
 	"bin": [
-		"gettext-extractor.php"
+		"console.php"
 	]
 }

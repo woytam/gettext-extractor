@@ -1,11 +1,15 @@
 <?php
 
-/**
- * @author Ondřej Vodáček
- */
-abstract class GettextExtractor_Filters_FilterTest extends PHPUnit_Framework_TestCase {
+namespace Webwings\Gettext\Extractor\Filters;
 
-	/** @var AFilter */
+require_once ('./../../../../vendor/autoload.php');
+
+use Tester\Assert;
+use Tester\TestCase;
+
+abstract class FilterTest extends TestCase {
+
+	/** @var Filter */
 	protected $object;
 
 	/** @var string */
@@ -13,7 +17,7 @@ abstract class GettextExtractor_Filters_FilterTest extends PHPUnit_Framework_Tes
 
 	public function testExtract() {
 		$messages = $this->object->extract($this->file);
-
+dump($messages);
 		$this->assertInternalType('array', $messages);
 
 		$this->assertContains(array(
@@ -39,5 +43,7 @@ abstract class GettextExtractor_Filters_FilterTest extends PHPUnit_Framework_Tes
 			GettextExtractor_Extractor::PLURAL => 'I see %d little indians!',
 			GettextExtractor_Extractor::CONTEXT => 'context'
 		), $messages);
+
 	}
 }
+
