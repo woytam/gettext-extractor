@@ -69,7 +69,7 @@ class PHPFilter extends Filter implements IFilter, NodeVisitor
     public function enterNode(Node $node)
     {
         $name = null;
-        if (($node instanceof Node\Expr\MethodCall || $node instanceof Node\Expr\StaticCall) && is_string($node->name)) {
+        if (($node instanceof \PhpParser\Node\Expr\MethodCall || $node instanceof \PhpParser\Node\Expr\StaticCall) && $node->name instanceof \PhpParser\Node\Identifier && is_string($node->name->name)) {
             $name = $node->name;
         } elseif ($node instanceof Node\Expr\FuncCall && $node->name instanceof Node\Name) {
             $parts = $node->name->parts;
