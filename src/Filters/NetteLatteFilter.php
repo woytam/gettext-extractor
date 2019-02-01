@@ -140,7 +140,7 @@ class NetteLatteFilter extends Filter implements IFilter
                 $levelTernalOperator[$level]++;
             } elseif ($tokens->isCurrent('|')) {
                 $tokens->nextToken();
-                $levelRequiredArguments[$level] = $this->getRequiredArguments($tokens->currentValue());
+//                $levelRequiredArguments[$level] = $this->getRequiredArguments($tokens->currentValue());
             } elseif ($tokens->isCurrent(['(', '['])) {
                 $level++;
                 $levelArguments[$level] = [];
