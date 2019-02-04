@@ -124,7 +124,8 @@ class NetteExtractor extends Extractor
             ->addFunction('setDefaultValue')
             ->addFunction('setPrompt')
             ->addFunction('addProtection')
-            ->addFunction('allowUpload');
+            ->addFunction('allowUpload')
+            ->addFunction('setOption', 2);
 
         return $this;
     }
